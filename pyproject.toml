@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "my-app"
+name = "vscode-chatgpt-linter"
 version = "0.1.0"
 description = ""
 authors = ["Yu Li <github@yuli.se>"]

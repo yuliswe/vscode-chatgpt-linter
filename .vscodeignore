@@ -1,0 +1,10 @@
+# Ignore everything by default
+**
+
+# Except the dist folder
+!dist/**
+!CHANGELOG.md
+!LICENSE.md
+!README.md
+!package.json
+!package-lock.json

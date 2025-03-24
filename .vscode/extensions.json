@@ -2,6 +2,9 @@
   "recommendations": [
     "ms-vscode.vscode-typescript-next",
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "dbaeumer.vscode-eslint",
+    "connor4312.esbuild-problem-matchers",
+    "ms-vscode.extension-test-runner"
   ]
 }

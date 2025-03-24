@@ -1,32 +1,98 @@
 {
-  "name": "my-app",
+  "name": "vscode-chatgpt-linter",
+  "displayName": "ChatGPT Linter",
+  "description": "Lints code via ChatGPT according to your custom rules, and shows inline squiggles in VS Code editor, like eslint does.",
   "version": "0.0.1",
-  "description": "My App Template",
-  "type": "module",
+  "type": "commonjs",
+  "publisher": "yuliswe",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
   "scripts": {
-    "test": "jest",
-    "build": "echo TODO - modify this script to build your library",
-    "start": "nodemon --config nodemon.json"
+    "package": "npm run build && vsce package && unzip -l vscode-chatgpt-linter*",
+    "package:publish": "npm run package && echo 'Publishing in 5s...' && sleep 5 && vsce publish",
+    "compile": "npm run check-types && npm run lint && node esbuild.cjs && cp ./src/typechatSchema.ts ./dist/",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.cjs --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "build": "npm run check-types && npm run lint && node esbuild.cjs --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
   },
   "repository": {},
   "keywords": [],
+  "categories": [
+    "Other"
+  ],
   "author": "Yu Li",
   "license": "MIT",
   "bugs": {},
   "homepage": "",
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "chatgptLinter.lintCurrentFileCommand",
+        "title": "ChatGPT Linter: Lint Current File"
+      }
+    ],
+    "configuration": {
+      "title": "ChatGPT Linter Settings",
+      "properties": {
+        "chatgptLinter.apiKeyForOpenAi": {
+          "title": "API key for OpenAI",
+          "type": "string",
+          "default": "",
+          "description": "Your OpenAI API key for ChatGPT requests",
+          "markdownDescription": "Your [OpenAI API key](https://auth.openai.com/log-in) for ChatGPT requests."
+        },
+        "chatgptLinter.stylePath": {
+          "type": "string",
+          "default": "./chatgpt-linter-prompt.md",
+          "description": "Path to your style guide file relative to the workspace root."
+        },
+        "chatgptLinter.lintFileName": {
+          "type": "string",
+          "default": ".chatgpt-lint.json",
+          "description": "Output file name for ChatGPT lint results (relative to workspace root)."
+        },
+        "chatgptLinter.model": {
+          "type": "string",
+          "default": "o3-mini",
+          "title": "ChatGPT Model",
+          "markdownDescription": "The [OpenAI model](https://platform.openai.com/docs/models) to use."
+        }
+      }
+    }
+  },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "eslint": "^8.57.0",
-    "eslint-plugin-jest": "^27.9.0",
-    "eslint-plugin-unused-imports": "^3.1.0",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.21.0",
+    "generate-code": "^2.3.2",
+    "generator-code": "^1.11.7",
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "openai": "^4.89.0",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@types/jest": "^29.5.12"
+    "typechat": "^0.1.1",
+    "typescript": "^5.7.3",
+    "vsce": "^2.15.0",
+    "yo": "^5.1.0"
   }
 }
