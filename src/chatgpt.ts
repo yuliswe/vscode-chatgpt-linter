@@ -142,8 +142,8 @@ export async function lintCurrentFileCommand() {
 <--- Instruction --->
 ${styleGuide}
 
-<-- Code to lint -->
 // ${filename}
+<-- Code to lint -->
 ${code}
   `;
 
