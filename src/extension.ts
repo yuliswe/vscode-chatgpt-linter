@@ -48,6 +48,7 @@ function updateDiagnosticsFromFile(
         ? vscode.DiagnosticSeverity.Error
         : vscode.DiagnosticSeverity.Warning,
     );
+    diagnostic.source = "(ChatGPT Linter)";
 
     diagnosticCollection.set(fileUri, [
       ...(diagnosticCollection.get(fileUri) || []),
