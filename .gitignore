@@ -8,3 +8,4 @@ build/
 .env
 *.vsix
 .chatgpt-lint.json
+*.tgz

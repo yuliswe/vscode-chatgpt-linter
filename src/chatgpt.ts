@@ -142,10 +142,13 @@ export async function lintCurrentFileCommand() {
 <--- Instruction --->
 ${styleGuide}
 
-// ${filename}
 <-- Code to lint -->
-${code}
-  `;
+// ${filename}
+${code
+  .split("\n")
+  .map((line, i) => `${i + 1}: ${line}`)
+  .join("\n")}
+`;
 
   try {
     vscode.window.showInformationMessage(
