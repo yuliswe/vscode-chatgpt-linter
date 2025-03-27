@@ -2,16 +2,17 @@
   "name": "vscode-chatgpt-linter",
   "displayName": "ChatGPT Linter",
   "description": "Lints code via ChatGPT according to your custom rules, and shows inline squiggles in VS Code editor, like eslint does.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "commonjs",
   "publisher": "yuliswe",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.98.0"
   },
   "scripts": {
-    "package": "rm -f vscode-chatgpt-linter*.vsix && npm run build && vsce package && unzip -l vscode-chatgpt-linter*.vsix",
+    "package": "rm -f vscode-chatgpt-linter.vsix && npm run build && vsce package --out vscode-chatgpt-linter.vsix && unzip -l vscode-chatgpt-linter.vsix",
     "prepack": "rm -f vscode-chatgpt-linter*.tgz",
-    "package:publish": "npm run package && echo 'Publishing in 5s...' && sleep 5 && vsce publish",
+    "deploy": "npm run package && echo 'Publishing in 5s...' && sleep 5 && vsce publish",
     "compile": "npm run check-types && npm run lint && node esbuild.cjs && cp ./src/typechatSchema.ts ./dist/",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.cjs --watch",
